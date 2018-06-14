@@ -41,3 +41,14 @@ PHAuthorizationStatusAuthorized         // User has authorized this application 
 } PHOTOS_AVAILABLE_IOS_TVOS(8_0, 10_0);
 
 7 保存图片的类已经封装好，点击[githup地址](https://github.com/Water95/HHSaveImage.git)下载
+
+8 使用方法
+* 把 HHSaveImage.h 和 HHSaveImage.m拖入你的工程
+* 引入头文件，然后一行代码
+[HHSaveImage saveImage:image SaveImageCompletionBlock:^(BOOL isSuccess, NSError *error) {
+if (isSuccess) {
+NSLog(@"成功");
+}else{
+NSLog(@"失败");
+}
+}];
