@@ -42,7 +42,17 @@ PHAuthorizationStatusAuthorized         // User has authorized this application 
 
 7 保存图片的类已经封装好，点击[githup地址](https://github.com/Water95/HHSaveImage.git)下载
 
-8 使用方法
+8 提示用户跳转到设置页面
+
+```
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+```
+
+不要再使用                          
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=Photos"]];
+如果出现 prefs:root，苹果会拒绝
+
+9 使用方法
 * 把 HHSaveImage.h 和 HHSaveImage.m拖入你的工程
 * 引入头文件，然后一行代码
 [HHSaveImage saveImage:image SaveImageCompletionBlock:^(BOOL isSuccess, NSError *error) {
