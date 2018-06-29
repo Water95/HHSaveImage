@@ -10,15 +10,18 @@
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface HHSaveImage ()
+@interface HHSaveImage ()<UIAlertViewDelegate>
 @property (nonatomic,copy) SaveImageCompletionBlock saveBlock;
+@property (nonatomic,strong) UIViewController *controller;
 @end
 
 @implementation HHSaveImage
 
-+ (void)saveImage:(UIImage *)image SaveImageCompletionBlock:(SaveImageCompletionBlock)block{
++ (void)saveImage:(UIImage *)image andViewController:(UIViewController *)controller SaveImageCompletionBlock:(SaveImageCompletionBlock)block
+{
     HHSaveImage *saveTool = [[HHSaveImage alloc] init];
     saveTool.saveBlock = block;
+    saveTool.controller = controller;
     [saveTool saveImageToPhotoAlbum:image];
 }
 
@@ -67,7 +70,29 @@
 }
 //没有权限的提示
 - (void)showNoAuthorityAlerView{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"请进入iPhone的设置 - 隐私 - 相册 选项，允许访问您的手机相册" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"请进入iPhone的设置 - 隐私 - 相册 选项，允许访问您的手机相册" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
     [alertView show];
+        
+    }
+    else{
+        
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:@"请进入iPhone的设置 - 隐私 - 相册 选项，允许访问您的手机相册" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction  actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIAlertAction *sureAction = [UIAlertAction  actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:sureAction];
+    [self.controller presentViewController:alertController animated:NO completion:^{
+        
+    }];
+        
+    }
 }
+
 @end

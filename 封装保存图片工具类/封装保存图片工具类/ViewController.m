@@ -16,18 +16,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 200, 40)];
+    btn.backgroundColor = [UIColor blueColor];
+    [btn addTarget:self action:@selector(saveOnClick) forControlEvents:UIControlEventTouchDown];
+    [btn setTitle:@"保存图片" forState:UIControlStateNormal];
+    [self.view addSubview:btn];
+}
+- (void)saveOnClick{
     UIImage *image = [UIImage imageNamed:@"3"];
     
-    [HHSaveImage saveImage:image SaveImageCompletionBlock:^(BOOL isSuccess, NSError *error) {
+    [HHSaveImage saveImage:image andViewController:self  SaveImageCompletionBlock:^(BOOL isSuccess, NSError *error) {
         if (isSuccess) {
             NSLog(@"成功");
         }else{
             NSLog(@"失败");
         }
     }];
-    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

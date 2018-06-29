@@ -21,6 +21,6 @@ typedef void(^SaveImageCompletionBlock)(BOOL isSuccess,NSError *error);
  @param image 保存的图片
  @param block 成功或者失败的返回。
  */
-+ (void)saveImage:(UIImage *)image SaveImageCompletionBlock:(SaveImageCompletionBlock)block;
++ (void)saveImage:(UIImage *)image andViewController:(UIViewController *)controller SaveImageCompletionBlock:(SaveImageCompletionBlock)block;
 
 @end
